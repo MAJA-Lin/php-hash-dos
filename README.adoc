@@ -61,3 +61,10 @@ Why attack PHP?::
 	web frameworks and JSON-laden POST requests, this setting is ineffective.
 	Other languages have taken this issue as serious security issue, and so should
 	PHP.  This is an issue that should be properly fixed in the interpreter.
+
+I want to sue you or make legal threats.::
+  First of all, that's not a question.  Second, threatening people doing
+	security work is a bad idea and is bad publicity for your company.  Finally, I
+	will publish any legal threats or correspondence from lawyers or the
+	authorities publicly.  I regret that I had to add this section, but this is
+	the world we live in.
