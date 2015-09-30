@@ -1,0 +1,35 @@
+PHP Hash DoS Vulnerability
+==========================
+
+== FAQ
+
+What is this?::
+  This is a straightforward proof of concept DoS against PHP.  By uploading a
+	specially-crafted JSON file to a PHP script accepting it, PHP performs so much
+	time inserting items into the hash that it can't do anything else.
+
+How does it work?::
+	PHP, like Perl, Python, and Ruby, provides hash tables, or associative arrays,
+	that map strings (and sometimes other values) into arbitrary values.  These
+	hash tables are implemented by hashing the key with some hash function, and
+	inserting it into the hash table's underlying array based on the bottom bits
+	of that result.  The performance of the hash table is dependent on the
+	assumption that the hash values will be evenly distributed.
++
+PHP, unlike Perl, Python, and Ruby, uses a hash function that computes the same
+value every time.  As a consequence, it's possible to precompute a large number
+of keys where the hash values all have the relevant bits set to 0.
+Consequently, PHP has to perform an O(n) lookup on each insertion, access, and
+deletion, instead of an average case O(1).
+
+Why aren't other languages affected?::
+	Perl, Python, and Ruby all use a per-invocation secret key to manipulate their
+	hash functions so that on different invocations the same strings will hash
+	differently.  As a result, any attack on a given invocation of a program will
+	likely not succeed on subsequent invocations.  It's also nearly impossible to
+	precompute values that will affect all invocations of those programs.
+
+What versions of PHP are affected?::
+	This has been tested on PHP 7.0.0~rc3-3 as shipped by Debian.  From looking at
+	the source code of PHP 5.5, it is likely affected as well.  All versions of
+	PHP using the DJB "times 33" hash should be affected.
