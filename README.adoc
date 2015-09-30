@@ -62,6 +62,10 @@ Why attack PHP?::
 	Other languages have taken this issue as serious security issue, and so should
 	PHP.  This is an issue that should be properly fixed in the interpreter.
 
+How do I test this for myself?::
+	Run `php scripts/exploited.php < example/1048576.json`.  This script just
+	reads in a JSON file and prints it out.
+
 I want to sue you or make legal threats.::
   First of all, that's not a question.  Second, threatening people doing
 	security work is a bad idea and is bad publicity for your company.  Finally, I
