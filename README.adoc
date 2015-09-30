@@ -30,6 +30,34 @@ Why aren't other languages affected?::
 	precompute values that will affect all invocations of those programs.
 
 What versions of PHP are affected?::
-	This has been tested on PHP 7.0.0~rc3-3 as shipped by Debian.  From looking at
-	the source code of PHP 5.5, it is likely affected as well.  All versions of
-	PHP using the DJB "times 33" hash should be affected.
+	This has been tested on PHP 7.0.0~rc3-3 as shipped by Debian.  PHP 5.6
+	(Debian's 5.6.13+dfsg-2) is as well. From looking at the source code of PHP
+	5.5, it is likely affected as well.  All versions of PHP using the DJB "times
+	33" hash should be affected.
+
+How do I know if my PHP app is vulnerable?::
+	If your PHP app accepts JSON or YAML input from the user, or accepts untrusted
+	input and inserts that input as keys in a hash, your application is likely
+	vulnerable.  An example JSON file with 1048576 entries is in the example
+	directory.  You can upload part or all of this file to your application and
+	see how it performs.
++
+On a 2.8 GHz Core i7, a JSON file containing 65536 entries takes the
+scripts/exploited.php script 5.358 seconds to process with PHP 7.  With twice as
+many entries, it takes 21 seconds to process.  PHP 5.6 performs much worse: the
+smaller file itself takes 22 seconds.
+
+How do I attack other people's systems with this?::
+  You don't.  That's unethical; shame on you.
+
+How did you discover this?::
+  I looked at the source code, implemented the PHP hash function in C (after
+	prototyping in Perl), and tested.
+
+Why attack PHP?::
+  These types of attacks have been known for some time.  PHP has had CVEs
+	allocated against it in the past for these types of attacks, but the only fix
+	provided was the `max_input_vars` setting.  However, in the world of RESTful
+	web frameworks and JSON-laden POST requests, this setting is ineffective.
+	Other languages have taken this issue as serious security issue, and so should
+	PHP.  This is an issue that should be properly fixed in the interpreter.
