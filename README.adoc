@@ -1,6 +1,15 @@
 PHP Hash DoS Vulnerability
 ==========================
 
+== Demonstration
+
+Run `time php scripts/exploited.php < example/1048576.json >/dev/null`.  This
+script just reads in a JSON file and prints it out.  If you'd like a smaller
+file, just run
+`perl scripts/minimize.pl 65536 < example/1048576.json >test.json` and use
+`test.json` instead.  That produces a still pathological, but much smaller (1
+MiB), file.
+
 == FAQ
 
 What is this?::
